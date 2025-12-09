@@ -109,4 +109,13 @@ class DynamicArray{
 int main(){
 
     return 0;
+
 }
+ void print() {
+        cout << "[";
+        for (int i = 0; i < size; i++) {
+            cout << data[i];
+            if (i < size - 1) cout << ", ";
+        }
+        cout << "]" << endl;
+    }
