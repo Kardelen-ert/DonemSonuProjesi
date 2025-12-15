@@ -26,13 +26,21 @@ class DynamicArray{
     bool isEmpty();
     void clear();
     void print();
+
+    int& operator[](int index);
+    const int& operator[](int index) const;
+    DynamicArray operator+(const DynamicArray& other) const;
+    DynamicArray& operator=(const DynamicArray& other);
+    bool operator==(const DynamicArray& other) const;
+    bool operator!=(const DynamicArray& other) const;
+
+    friend ostream& operator<<(ostream& os, const DynamicArray& arr);
 };
 //Sorted Array tanımı
 class SortedArray:public DynamicArray{
     public:
     SortedArray();
     SortedArray(int cap);
-    ~SortedArray();
     void push(int value) override;
     int binarySearch(int value);
 };
@@ -49,24 +57,113 @@ class UniqueArray:public DynamicArray{
 
 //Operatör overloading
 int main(){
+     cout << "===== DynamicArray =====" << endl;
+    DynamicArray a;
+    a.push(15);
+    a.push(17);
+    a.push(30);
+    a.print();
+
+    a[1] = 13;
+    cout << "a[1] = " << a[1] << endl;
+
+    DynamicArray b;
+    b.push(89);
+    b.push(100);
+
+    DynamicArray c = a + b;
+    c.print();
+
+    cout << "\n===== SortedArray =====" << endl;
+    SortedArray s;
+    s.push(100);
+    s.push(89);
+    s.push(87);
+    s.push(40);
+    s.print();
+    cout << "89 index: " << s.binarySearch(89) << endl;
+
+    cout << "\n===== UniqueArray =====" << endl;
+    UniqueArray u;
+    u.push(10);
+    u.push(28);
+    u.push(95);
+    u.push(70);
+    u.print();
+    cout << "95 var mi? ";
+    if (u.contains(95)) {
+        cout << "Evet";
+    } else {
+        cout << "Hayir";
+    }
+        cout << endl;
 
     return 0;
+}
+
+int& DynamicArray::operator[](int index) {
+    if (index < 0 || index >= size)
+        throw out_of_range("Hatali indeks");
+    return data[index];
+}
+
+DynamicArray DynamicArray::operator+(const DynamicArray& other) const {
+    DynamicArray temp(size + other.size);
+    for (int i = 0; i < size; i++)
+        temp.push(data[i]);
+    for (int i = 0; i < other.size; i++)
+        temp.push(other.data[i]);
+    return temp;
+}
+DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
+    if (this == &other) return *this;
+
+    delete[] data;
+    capacity = other.capacity;
+    size = other.size;
+    data = new int[capacity];
+    for (int i = 0; i < size; i++)
+        data[i] = other.data[i];
+
+    return *this;
+}
+
+bool DynamicArray::operator==(const DynamicArray& other) const {
+    if (size != other.size) return false;
+    for (int i = 0; i < size; i++)
+        if (data[i] != other.data[i]) return false;
+    return true;
+}
+
+bool DynamicArray::operator!=(const DynamicArray& other) const {
+    return !(*this == other);
+}
+
+ostream& operator<<(ostream& os, const DynamicArray& arr) {
+    os << "[";
+    for (int i = 0; i < arr.size; i++) {
+        os << arr.data[i];
+        if (i < arr.size - 1) os << ", ";
+    }
+    os << "]";
+    return os;
 }
 
 //DynamicArray method kodları
 void DynamicArray::resize(){
         capacity *=2;
-        int* newdata=new int(capacity);
+        int* newdata=new int[capacity];
         for(int i=0; i<size; i++){
             newdata[i]= data[i];
         
-        delete[] data;
-        data = newdata;
+       
         }
+         delete[] data;
+        data = newdata;
 
     }
 
-DynamicArray::DynamicArray(int cap = 2) {
+DynamicArray::DynamicArray(int cap ) {
         capacity = cap;
         size = 0;
         data = new int[capacity];
@@ -75,7 +172,7 @@ DynamicArray::DynamicArray(int cap = 2) {
 DynamicArray::DynamicArray(const DynamicArray& other){
         capacity=other.capacity;
         size=other.size;
-        data=new int(capacity);
+        data=new int[capacity];
         for(int i=0; i<size ;i++){
             data[i]=other.data[i];
         }
