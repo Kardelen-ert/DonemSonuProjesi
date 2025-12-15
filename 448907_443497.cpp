@@ -213,7 +213,7 @@ void DynamicArray::set(int index, int value){
             return;
 
         }
-        value= data[index];
+        data[index]=value;
     }
 
 int DynamicArray::getSize(){
@@ -249,10 +249,6 @@ SortedArray::SortedArray(int cap):DynamicArray(cap){}
 
 void SortedArray::push(int value){
     
-    if (getSize() >= getCapacity()) {   //size ve cap priv olduğu için fonksiyonları kullanıyoruz
-        resize();                        
-    }
-
     DynamicArray::push(0);     
 
     int pos = getSize() - 1;
@@ -260,7 +256,7 @@ void SortedArray::push(int value){
         set(pos,get(pos-1));                  //0 yerine ondan önceki eleman yazılıyor
         pos--;
     }
-    set(pos, value);                             // value öncekinden büyük ise yerleştir
+    DynamicArray::set(pos, value);                             // value öncekinden büyük ise yerleştir
 }
 
 int SortedArray::binarySearch(int value){
