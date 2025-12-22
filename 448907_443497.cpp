@@ -100,13 +100,13 @@ int main(){
 
     return 0;
 }
-
+//Köşeli Parantez Operatörü(diziden doğrudan alınacak)
 int& DynamicArray::operator[](int index) {
     if (index < 0 || index >= size)
         throw out_of_range("Hatali indeks");
     return data[index];
 }
-
+//Artı Operatörü(iki diziyi birleştiriri)
 DynamicArray DynamicArray::operator+(const DynamicArray& other) const {
     DynamicArray temp(size + other.size);
     for (int i = 0; i < size; i++)
@@ -115,6 +115,7 @@ DynamicArray DynamicArray::operator+(const DynamicArray& other) const {
         temp.push(other.data[i]);
     return temp;
 }
+//Atama operatörü
 DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
     if (this == &other) return *this;
 
@@ -128,6 +129,7 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
     return *this;
 }
 
+//Eşitlik Kontrolu yapılır.
 bool DynamicArray::operator==(const DynamicArray& other) const {
     if (size != other.size) return false;
     for (int i = 0; i < size; i++)
@@ -150,6 +152,8 @@ ostream& operator<<(ostream& os, const DynamicArray& arr) {
 }
 
 //DynamicArray method kodları
+
+//Diziyi iki katına çıkarır.
 void DynamicArray::resize(){
         capacity *=2;
         int* newdata=new int[capacity];
@@ -168,7 +172,7 @@ DynamicArray::DynamicArray(int cap ) {
         size = 0;
         data = new int[capacity];
     }    
-
+//Copy Constructor
 DynamicArray::DynamicArray(const DynamicArray& other){
         capacity=other.capacity;
         size=other.size;
@@ -181,7 +185,8 @@ DynamicArray::DynamicArray(const DynamicArray& other){
 DynamicArray::~DynamicArray(){
         delete[] data;
     }
- 
+
+//Eleman ekleme yapar.
 void DynamicArray::push(int value){
         if(size == capacity){
             resize();
@@ -189,6 +194,7 @@ void DynamicArray::push(int value){
         data[size++]=value;
     }   
 
+//Son elemanı siler.
 void DynamicArray::pop(){
         if(size == 0){
             cout <<"Dizi bos, hata!"<<endl;
