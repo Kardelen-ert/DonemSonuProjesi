@@ -100,7 +100,7 @@ int main(){
 
     return 0;
 }
-//Köşeli Parantez Operatörü(diziden doğrudan alınacak)
+//Köşeli Parantez Operatörü
 int& DynamicArray::operator[](int index) {
     if (index < 0 || index >= size)
         throw out_of_range("Hatali indeks");
