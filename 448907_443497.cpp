@@ -276,7 +276,7 @@ int SortedArray::binarySearch(int value){
         }
         if (midVal<value){                 
             left=mid+1;
-        }                                     //oratdaki değerden büyükse sağa küçükse sola bak
+        }                                     //ortadaki değerden büyükse sağa küçükse sola bak
         if (midVal>value){ 
             right=mid-1;
         }
