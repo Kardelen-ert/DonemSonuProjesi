@@ -153,7 +153,7 @@ ostream& operator<<(ostream& os, const DynamicArray& arr) {
 
 //DynamicArray method kodları
 
-//Diziyi iki katına çıkarır.
+//Dizinin kapasitesi iki katına çıkarır.
 void DynamicArray::resize(){
         capacity *=2;
         int* newdata=new int[capacity];
